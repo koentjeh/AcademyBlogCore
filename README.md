@@ -10,6 +10,49 @@ De **PostInterace** is dan wel te vinden in **Blog** mappen;
 `Api/Data/BlogPostInterface` -->
 `Api/Data/Blog/PostInterface`
 
+## PostInterface
+
+De interface bevat de keys van kolommen. Zo kunnen modules die gebruik maken van de **PostInterface** (bovenliggende module) deze keys gebruiken.
+
+Wanneer een key wordt aangepast zal automatisch de key van bovenliggende module aangepast worden. Dit geldt ook voor de getters en setters.
+
+Zo verklein je de kans dat een module bij een aanpassing omvalt. Mits er geen key weggehaald wordt, kunnen er vanuit hier met een `setup:upgrade` geen problemen optreden met bovenliggende modules. 
+
+Bij wijzigingen hoeft onderstaande maar op één plek aangepast te worden.
+
+```php
+interface PostInterface extends ReadablePostInterface, MutablePostInterface
+{
+    public const TITLE = 'title';
+    public const BODY = 'body';
+    public const URL_KEY = 'url_key';
+}
+```
+
+```php
+public function getTitle(): string
+{
+    $this->getData(PostInterface::TITLE);
+}
+
+public function setTitle(string $title): void
+{
+    $this->setData(PostInterface::TITLE, $title);
+}
+```
+
+**AcademyBlogCli**/Console/Command/Blog/Post/PostCreateCommandInterface
+```php
+public function configure()
+{
+    $this->setName('blog:post:create')
+        ->setDescription('Create a blog post')
+        ->addOption(PostInterface::TITLE,   't', InputOption::VALUE_REQUIRED, 'Blog Post Title')
+        ->addOption(PostInterface::BODY,    'b', InputOption::VALUE_REQUIRED, 'Blog Post Body')
+        ->addOption(PostInterface::URL_KEY, 'u', InputOption::VALUE_OPTIONAL, 'Blog Post Url Key');
+}
+```
+
 ## Read/Write PostInterface
 
 De **PostInterface** is gescheiden in twee verschillende interfaces, maar bevat nog steeds dezelfde methodes door deze te extenden.
