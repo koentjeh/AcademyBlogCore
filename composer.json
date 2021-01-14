@@ -1,0 +1,21 @@
+{
+  "name": "koen/academy-blog-core",
+  "version": "0.0.1",
+  "description": "Provides the core functionality to create your own Magento 2 Blog",
+  "type": "magento2-module",
+  "require": {
+    "PHP": ">=7.1",
+    "magento/framework": "*"
+  },
+  "license": [
+    "Proprietary"
+  ],
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Koen\\AcademyBlogCore\\": ""
+    }
+  }
+}
