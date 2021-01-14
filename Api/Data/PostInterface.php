@@ -2,7 +2,7 @@
 
 namespace Koen\AcademyBlogCore\Api\Data;
 
-interface PostInterface extends ReadablePostInterface, WriteablePostInterface
+interface PostInterface extends ReadablePostInterface, MutablePostInterface
 {
     // The Post
     public const TITLE = 'title';

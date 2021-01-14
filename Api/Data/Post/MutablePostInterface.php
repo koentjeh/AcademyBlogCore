@@ -2,9 +2,7 @@
 
 namespace Koen\AcademyBlogCore\Api\Data;
 
-use Magento\Tests\NamingConvention\true\string;
-
-interface WriteablePostInterface
+interface MutablePostInterface
 {
     public function setTitle(string $title): void;
 

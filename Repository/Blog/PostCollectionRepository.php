@@ -2,7 +2,6 @@
 
 namespace Koen\AcademyBlogCore\Repository\Blog;
 
-use Koen\AcademyBlogCore\Api\Data\PostInterface;
 use Koen\AcademyBlogCore\Model\Blog\Resource\Collection\PostCollection;
 use Koen\AcademyBlogCore\Model\Blog\Resource\PostResource;
 
