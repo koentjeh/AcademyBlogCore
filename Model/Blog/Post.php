@@ -1,15 +1,16 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Koen\AcademyBlogCore\Model\Blog;
 
 use Koen\AcademyBlogCore\Api\Data\PostInterface;
+use Koen\AcademyBlogCore\Model\Blog\Resource\PostResource;
 use Magento\Framework\Model\AbstractModel;
 
 class Post extends AbstractModel implements PostInterface
 {
     protected function _construct()
     {
-        $this->_init();
+        $this->_init(PostResource::class);
     }
 
     public function getTitle(): string
