@@ -11,7 +11,7 @@ class PostRepository implements PostRepositoryInterface
     /*** @var PostResource */
     protected $postResource;
 
-    /*** @var PostInterfaceFactory */
+    /*** @var PostInterface */
     protected $postFactory;
 
     /*** @var PostCollection */
@@ -19,7 +19,7 @@ class PostRepository implements PostRepositoryInterface
 
     public function __construct(
         PostResource $postResource,
-        PostInterfaceFactory $postFactory,
+        PostInterface $postFactory,
         PostCollection $postCollection
     ) {
         $this->postResource = $postResource;

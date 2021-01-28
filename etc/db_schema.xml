@@ -8,7 +8,7 @@
         <column xsi:type="varchar" name="url_key" length="255" nullable="false" comment="Blog Post URL Key" />
         <column xsi:type="text" name="body" nullable="false" comment="Blog Post Body" />
         <constraint xsi:type="primary" referenceId="PRIMARY">
-            <column name="id" />
+            <column name="post_id" />
         </constraint>
     </table>
 </schema>

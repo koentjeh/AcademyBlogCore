@@ -1,6 +1,6 @@
 <?php
 
-namespace Koen\AcademyBlogCore\Api\Data;
+namespace Koen\AcademyBlogCore\Api\Data\Post;
 
 interface ReadablePostInterface
 {

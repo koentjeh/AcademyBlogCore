@@ -7,8 +7,8 @@ Voor als je tijd hebt om commentaar te leveren op onderstaande om een discussie 
 De module heet Academy**Blog**Core. Vandaar de naam **Post**Interface i.p.v. **BlogPost**Interface. De modulenaam geeft de context al weer.
 
 De **PostInterace** is dan wel te vinden in **Blog** mappen;
-`Api/Data/BlogPostInterface` -->
-`Api/Data/Blog/PostInterface`
+
+`Api/Data/BlogPostInterface` --> `Api/Data/Blog/PostInterface`
 
 ## PostInterface
 

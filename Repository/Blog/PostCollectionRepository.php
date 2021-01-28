@@ -2,15 +2,17 @@
 
 namespace Koen\AcademyBlogCore\Repository\Blog;
 
+use Koen\AcademyBlogCore\Api\Data\PostInterface;
 use Koen\AcademyBlogCore\Model\Blog\Resource\Collection\PostCollection;
 use Koen\AcademyBlogCore\Model\Blog\Resource\PostResource;
+use Magento\Framework\Api\SearchCriteriaBuilder;
 
 class PostCollectionRepository implements PostCollectionRepositoryInterface
 {
     /** @var PostResource */
     protected $postResource;
 
-    /** @var PostInterfaceFactory */
+    /** @var PostInterface */
     protected $postFactory;
 
     /** @var PostCollection */
@@ -19,12 +21,12 @@ class PostCollectionRepository implements PostCollectionRepositoryInterface
     /**
      * PostCollectionRepository constructor.
      * @param PostResource $postResource
-     * @param PostInterfaceFactory $postFactory
+     * @param PostInterface $postFactory
      * @param PostCollection $postCollection
      */
     public function __construct(
         PostResource $postResource,
-        PostInterfaceFactory $postFactory,
+        PostInterface $postFactory,
         PostCollection $postCollection
     ) {
         $this->postResource = $postResource;

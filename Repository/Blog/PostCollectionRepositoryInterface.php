@@ -2,7 +2,7 @@
 
 namespace Koen\AcademyBlogCore\Repository\Blog;
 
-use Koen\AcademyBlogCore\Api\Data\ReadablePostInterface;
+use Koen\AcademyBlogCore\Api\Data\Post\ReadablePostInterface;
 
 interface PostCollectionRepositoryInterface
 {
