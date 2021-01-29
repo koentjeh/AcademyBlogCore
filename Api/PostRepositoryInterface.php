@@ -4,6 +4,7 @@ namespace Koen\AcademyBlogCore\Api;
 
 use Koen\AcademyBlogCore\Api\Data\PostInterface;
 use Magento\Framework\Api\SearchCriteriaInterface;
+use Magento\Framework\Data\SearchResultInterface;
 
 interface PostRepositoryInterface
 {
@@ -42,5 +43,5 @@ interface PostRepositoryInterface
      *
      * @param SearchCriteriaInterface $searchCriteria
      */
-    public function getList(SearchCriteriaInterface $searchCriteria);
+    public function getList(SearchCriteriaInterface $searchCriteria): SearchResultInterface;
 }

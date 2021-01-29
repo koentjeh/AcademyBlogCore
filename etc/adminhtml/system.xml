@@ -6,8 +6,7 @@
         </tab>
         <section id="academy_blog" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
             <tab>academy</tab>
-            <resource>Koen_AcademyBlogCore::config</resource>
-            <group id="academy_blog_general" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+            <group id="general" translate="label" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>General</label>
                 <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Enabled</label>
