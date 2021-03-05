@@ -3,8 +3,9 @@
 namespace Koen\AcademyBlogCore\Api;
 
 use Koen\AcademyBlogCore\Api\Data\PostInterface;
-use Magento\Framework\Api\SearchCriteriaInterface;
-use Magento\Framework\Data\SearchResultInterface;
+use Magento\Framework\Api\SearchCriteria;
+use Magento\Framework\Api\SearchCriteriaBuilder;
+use Magento\Framework\Api\SearchResults;
 
 interface PostRepositoryInterface
 {
@@ -14,7 +15,7 @@ interface PostRepositoryInterface
      * @param PostInterface $post
      * @return bool
      */
-    public function save(PostInterface $post): bool;
+    public function save(PostInterface $post): PostInterface;
 
     /**
      * Get post by post id
@@ -30,18 +31,22 @@ interface PostRepositoryInterface
      * @param PostInterface $post
      * @return bool
      */
-    public function delete(PostInterface $post): bool;
+    public function delete(PostInterface $post): PostInterface;
 
     /**
-     * @param int $postId
-     * @return bool
+     * @param SearchCriteria|null $searchCriteria
+     * @return PostInterface[]
      */
-    public function deleteById(int $postId): bool;
+    public function getItems(?SearchCriteria $searchCriteria = null);
 
     /**
-     * Get product list
-     *
-     * @param SearchCriteriaInterface $searchCriteria
+     * @param SearchCriteria|null $searchCriteria
+     * @return SearchResults
      */
-    public function getList(SearchCriteriaInterface $searchCriteria): SearchResultInterface;
+    public function getList(?SearchCriteria $searchCriteria = null): SearchResults;
+
+    /**
+     * @return SearchCriteriaBuilder
+     */
+    public function getSearchCriteriaBuilder(): SearchCriteriaBuilder;
 }

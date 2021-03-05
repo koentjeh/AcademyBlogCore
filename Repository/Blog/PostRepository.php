@@ -3,53 +3,112 @@
 namespace Koen\AcademyBlogCore\Repository\Blog;
 
 use Koen\AcademyBlogCore\Api\Data\PostInterface;
+use Koen\AcademyBlogCore\Api\Data\PostInterfaceFactory;
+use Koen\AcademyBlogCore\Api\PostRepositoryInterface;
+use Koen\AcademyBlogCore\Model\Blog\Post;
 use Koen\AcademyBlogCore\Model\Blog\Resource\Collection\PostCollection;
 use Koen\AcademyBlogCore\Model\Blog\Resource\PostResource;
+use Magento\Framework\Api\SearchCriteria;
+use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
+use Magento\Framework\Api\SearchCriteriaBuilder;
+use Magento\Framework\Api\SearchResults;
+use Magento\Framework\Api\SearchResultsFactory;
+use Magento\Framework\Exception\AlreadyExistsException;
+use Psr\Log\LoggerInterface;
 
 class PostRepository implements PostRepositoryInterface
 {
-    /*** @var PostResource */
-    protected $postResource;
-
-    /*** @var PostInterface */
-    protected $postFactory;
-
-    /*** @var PostCollection */
-    protected $postCollection;
+    private $postResource;
+    private $postFactory;
+    private $postCollection;
+    private $searchCriteriaBuilder;
+    private $collectionProcessor;
+    private $searchResultsFactory;
+    private $logger;
 
     public function __construct(
         PostResource $postResource,
-        PostInterface $postFactory,
-        PostCollection $postCollection
+        PostInterfaceFactory $postFactory,
+        PostCollection $postCollection,
+        SearchCriteriaBuilder $searchCriteriaBuilder,
+        CollectionProcessorInterface $collectionProcessor,
+        SearchResultsFactory $searchResultsFactory,
+        LoggerInterface $logger
     ) {
         $this->postResource = $postResource;
         $this->postFactory = $postFactory;
         $this->postCollection = $postCollection;
+        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
+        $this->collectionProcessor = $collectionProcessor;
+        $this->searchResultsFactory = $searchResultsFactory;
+        $this->logger = $logger;
     }
 
-    public function getById(int $id): PostInterface
+    public function save(PostInterface $post): PostInterface
     {
-        $post = $this->postFactory->create();
-        $this->postResource->load($post, $id, 'post_id');
+        try {
+            $this->postResource->save($post);
+        } catch (\Exception $exception) {
+            $this->logger->critical($exception->getMessage());
+        }
 
         return $post;
     }
 
-    public function getByKey(PostInterface $key, $value): PostInterface
+    public function create(array $data = []): PostInterface
+    {
+        return $this->postFactory->create($data);
+    }
+
+    public function get(int $postId): PostInterface
     {
         $post = $this->postFactory->create();
-        $this->postResource->load($post, $value, $key);
+        $this->postResource->load($post, $postId, 'id');
 
         return $post;
     }
 
-    public function save(PostInterface $post): void
+    public function delete(PostInterface $post): PostInterface
     {
-        $this->postResource->save($post);
+        try {
+            $this->postResource->delete($post);
+        } catch (\Exception $exception) {
+            $this->logger->critical($exception->getMessage());
+        }
+
+        return $post;
     }
 
-    public function delete(PostInterface $post): void
+    /**
+     * @param SearchCriteria|null $searchCriteria
+     * @return SearchResults
+     */
+    public function getList(?SearchCriteria $searchCriteria = null): SearchResults
     {
-        $this->postResource->delete($post);
+        if (!$searchCriteria) {
+            $searchCriteria = $this->getSearchCriteriaBuilder()->create();
+        }
+
+        $collection = $this->postCollection;
+
+        $this->collectionProcessor->process($searchCriteria, $collection);
+        $collection->load();
+
+        $searchResults = $this->searchResultsFactory->create();
+        $searchResults->setSearchCriteria($searchCriteria);
+        $searchResults->setItems($collection->getItems());
+        $searchResults->setTotalCount($collection->getSize());
+
+        return $searchResults;
+    }
+
+    public function getItems(?SearchCriteria $searchCriteria = null)
+    {
+        return $this->getList($searchCriteria)->getItems();
+    }
+
+    public function getSearchCriteriaBuilder(): SearchCriteriaBuilder
+    {
+        return $this->searchCriteriaBuilder;
     }
 }
